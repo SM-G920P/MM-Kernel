@@ -11,7 +11,7 @@ echo
 # Set variables
 FIT=SpaceX_defconfig
 SETARCH=arm64
-CROSS=/home/spacex/Android_Workspace/Kernel/Toolchain/aarch64-linux-android-4.9/bin/aarch64-linux-android-
+CROSS=/home/buildserver/android/toolchains/UBERTC-aarch64-linux-android-5.3/bin/aarch64-linux-android-
 IMG=arch/arm64/boot
 DTS=arch/arm64/boot/dts
 DC=arch/arm64/configs
@@ -69,13 +69,7 @@ fi
 
 #################################### BOOT.IMG COMPILATION #####################################
 
-cd $BK/G920S
-./build.sh
-
-cd ../G920L
-./build.sh
-
-cd ../G920K
+cd $BK/G920P
 ./build.sh
 
 
