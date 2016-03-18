@@ -11,11 +11,17 @@ echo
 # Set variables
 FIT=SpaceX_defconfig
 SETARCH=arm64
-CROSS=/home/buildserver/android/toolchains/aarch64-linux-android-4.9/bin/aarch64-linux-android-
 IMG=arch/arm64/boot
 DTS=arch/arm64/boot/dts
 DC=arch/arm64/configs
 BK=build_kernel
+
+if [ -n "${1}" ]; then 
+	CROSS="${1}"
+else
+	CROSS=/home/buildserver/android/toolchains/aarch64-linux-android-4.9/bin/aarch64-linux-android-
+fi
+echo "Using CROSS: ${CROSS}"
 
 # Cleanup old files from build environment
 echo -n "Cleanup build environment.........................."
@@ -56,14 +62,19 @@ else
 	echo
 	echo "Compilation failed on FIT kernel !"
 	echo
-	while true; do
-    		read -p "Do you want to run a Make command to check the error?  (y/n) > " yn
-    		case $yn in
-        		[Yy]* ) make; echo ; exit;;
-        		[Nn]* ) echo; exit;;
-        	 	* ) echo "Please answer yes or no.";;
-    		esac
-	done
+	if [ -z "${2}" ]; then
+		while true; do
+			read -p "Do you want to run a Make command to check the error?  (y/n) > " yn
+			case $yn in
+				[Yy]* ) make; echo ; exit;;
+				[Nn]* ) echo; exit;;
+				* ) echo "Please answer yes or no.";;
+			esac
+		done
+	else
+		echo
+		exit
+	fi
 fi
 
 
@@ -94,7 +105,3 @@ echo
 echo "Build completed"
 echo
 #build script ends
-
-
-
-
